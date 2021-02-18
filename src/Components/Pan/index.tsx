@@ -13,8 +13,9 @@ export const Pan = () => {
           y: pan.y._value
         });
       },
-      onPanResponderMove: (...args) => {
-        console.log('Args: ', args)
+      onPanResponderMove: (_, gesture) => {
+        pan.x.setValue(gesture.dx)
+        pan.y.setValue(gesture.dy)
       },
       onPanResponderRelease: () => {
         pan.flattenOffset();
@@ -32,6 +33,11 @@ export const Pan = () => {
             height: 100,
             borderRadius: 100 / 2,
             backgroundColor: 'cyan',
+            transform: [{
+              translateX: pan.x
+            },{
+              translateY: pan.y
+            }]
             // transform: [{translateX: opacity}],
           },
           pan.getLayout()  
