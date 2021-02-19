@@ -11,7 +11,9 @@ export const Fade = () => {
   // drawer
   const drawerTransX = useState(new Animated.Value(-200))[0];
   const viewTransX = useState(new Animated.Value(0))[0];
-  const opacityDrawer = useState(new Animated.Value(0))[0];
+
+  // scaleBox
+  const scaleBox = useState(new Animated.Value(0))[0];
 
   const fadeInBall = () => {
     Animated.parallel([
@@ -73,7 +75,7 @@ export const Fade = () => {
       duration: 500,
       useNativeDriver: true,
     }),
-  ])
+  ]);
   const drawerAnimatedOut = Animated.parallel([
     Animated.timing(drawerTransX, {
       toValue: -200,
@@ -85,19 +87,31 @@ export const Fade = () => {
       duration: 500,
       useNativeDriver: true,
     }),
-  ])
+  ]);
 
   const drawerFunc = () => {
-    setDrawer(!drawer)
-    if(drawer){
+    setDrawer(!drawer);
+    if (drawer) {
       drawerAnimated.start();
-    } else{
-      drawerAnimatedOut.start()
+    } else {
+      drawerAnimatedOut.start();
     }
   };
+// const scaleValue = scaleBox.interpolate({
+//       inputRange:[0,100],
+//       outputRange:[0,300]
+//     })
+  const scale = () => {
+    Animated.timing(scaleBox,{
+      toValue:10,
+      duration:1000,
+      useNativeDriver:true
+    }).start()
+  }
   return (
     <>
       <Animated.View
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           flex: 1,
           opacity: 1,
@@ -116,6 +130,7 @@ export const Fade = () => {
         }}
       />
       <Animated.View
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           flex: 1,
           zIndex: 9,
@@ -162,7 +177,24 @@ export const Fade = () => {
             }}>
             <Text>Fade Out</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={scale}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              width: 100,
+              height: 50,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'blue',
+            }}>
+            <Text>Fade Out</Text>
+          </TouchableOpacity>
         </View>
+        <Animated.View style={{height:100, width:100, borderRadius:5, backgroundColor:'blue', marginLeft:150, marginBottom:20, transform:[
+          {
+            scale:scaleBox
+          }
+        ] }}/>
         <Animated.View
           // eslint-disable-next-line react-native/no-inline-styles
           style={{
